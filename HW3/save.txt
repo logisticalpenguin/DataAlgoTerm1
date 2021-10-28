@@ -1,0 +1,20 @@
+        if (finalAvg >= 90)
+        {
+            student[students].finalGrade = "A";
+        }
+        if (finalAvg >= 80 && finalAvg<= 89.99)
+        {
+            student[students].finalGrade = "B";
+        }
+        if (finalAvg >= 70 && finalAvg <= 79.99)
+        {
+            student[students].finalGrade = "C";
+        }
+        if (finalAvg >= 60 && finalAvg <= 69.99)
+        {
+            student[students].finalGrade = "D";
+        }
+        else
+        {
+            student[students].finalGrade = "F";
+        }

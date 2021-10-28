@@ -1,0 +1,75 @@
+#include<iostream>
+using namespace std;
+
+struct Sales{
+    int id;
+    float quarterSales[4];
+};
+
+/* Main program /
+int main() {
+    // for comparison
+    int maxEmp;
+    float maxEmpTotal = 0;
+    int maxQuar;
+    float maxQuarTotal = 0;
+
+    // sales employees
+    int empPop = 5;
+    Sales employee[empPop];
+
+    / User input /
+    for (int i = 0; i < empPop; i++){
+        cout << "Enter Employee #" << i + 1 << " ID: ";
+        cin >> employee[i].id;
+
+        for (int j = 0; j < 4; j++){
+            cout << "Quarter " << j + 1 << " sales: ";
+            cin >> employee[i].quarterSales[j];
+        }
+
+        cout << "\n\n";
+    }
+
+    / Results */
+    cout << "ID\t\tQT1\t\tQT2\t\tQT3\t\tQT4\t\tTotal" << endl;
+    // Employees count
+    for (int i = 0; i < empPop; i++){
+        float totalEmp = 0.00;
+
+        cout << employee[i].id << "\t\t";
+        for (int j = 0; j < 4; j++){
+            cout << employee[i].quarterSales[j] << "\t\t";
+            totalEmp += employee[i].quarterSales[j];
+        }
+
+        if (totalEmp > maxEmpTotal){
+            maxEmpTotal = totalEmp;
+            maxEmp = employee[i].id;
+        }
+        cout << totalEmp << endl;
+    }
+
+    // Quarterly assessment 
+    cout << "Total\t\t";
+    for (int j = 0; j < 4; j++){
+        float totalQ = 0.00;
+        for (int i = 0; i < empPop; i++){
+            totalQ += employee[i].quarterSales[j];
+        }
+
+        if (totalQ > maxQuarTotal){
+            maxQuarTotal = totalQ;
+            maxQuar = j + 1;
+        }
+        cout << totalQ << "\t\t";
+    }
+
+    // Report
+    cout << "\n\n";
+    cout << "Max Sale by SalesPerson: \nID: " << maxEmp << "\t\t Total: $" << maxEmpTotal << "\n\n";
+    cout << "Max Sale by Quarter: \nQuarter: " << maxQuar << "\t\t Total: $" << maxQuarTotal << endl;
+
+    system("pause");
+    return 0;
+}

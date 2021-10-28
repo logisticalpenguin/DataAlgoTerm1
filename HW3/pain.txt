@@ -1,0 +1,146 @@
+#include <iostream> 
+#include <string> 
+#include <cstring>
+
+using namespace std;
+
+// i thought final grades will be different but i guess not (a different void)
+
+void mainProg();
+void titleScreen();
+void gradesInput(int students);
+void finalOutput();
+//char gradeCalculation(float finalGrade);
+string gradeCalculation(float finalAvg);
+
+struct Grades { 
+    string firstName;
+    string lastName;
+    int idNum;
+    int program[5];
+    int exam[3];
+    int finalExam;
+    string finalGrade;
+} student[5];
+
+
+int main() {
+    titleScreen();
+    return 0;
+}
+
+
+void titleScreen() { 
+    
+    cout << "WELCOME TO THE GRADE BOOK." << endl;
+    cout << "=====================================" << endl;
+    cout << "Please enter 5 Students Names and Their IDs, as well as their grades." << endl;
+    cout << "=====================================" << endl;
+    
+    mainProg();
+}
+
+string gradeCalculation(float finalAvg){
+    
+}
+
+void mainProg() { 
+
+    int students;
+    int size;
+
+    for (students = 0; students < 1; students++) {
+        cout << "Enter Student # " << students + 1 << " First Name here: " << endl;
+        cin >> student[students].firstName;
+        cout << "Enter student # " << students + 1 << " Last Name here: " << endl;
+        cin >> student[students].lastName;
+        cout << "Enter student # " << students + 1 << " ID Number here: " << endl;
+        cin >> student[students].idNum;
+        gradesInput(students);
+    }
+
+
+    finalOutput();
+}
+
+void gradesInput(int students) { 
+        
+        float progAve = 0;
+        float examAve = 0;
+        float finalExamAve = 0;
+
+        for (int j = 0; j < 5; j++) { 
+            cout << "Program " << j + 1 << " Grades: " << endl;
+            cin >> student[students].program[j];
+            progAve += (float)student[students].program[j] * 0.3;
+        }
+
+        for (int k = 0; k < 3; k++) { 
+            cout << "Exam " << k + 1 << " Grades: " << endl;
+            cin >> student[students].exam[k];
+            examAve += (float)student[students].exam[k] * 0.15;
+        }
+
+        cout << "Final Exam Grade: " << endl;
+        cin >> student[students].finalExam;
+        finalExamAve = student[students].finalExam * 0.25;
+
+		float placeholderVar = progAve + examAve + finalExamAve;
+        
+        if (placeholderVar >= 90)
+        {
+            student[students].finalGrade = "A";
+        }
+        else if (placeholderVar >= 80 && placeholderVar <= 89.99)
+        {
+            student[students].finalGrade = "B";
+        }
+        else if (placeholderVar >= 70 && placeholderVar <= 79.99)
+        {
+            student[students].finalGrade = "C";
+        }
+        else if (placeholderVar >= 60 && placeholderVar <= 69.99)
+        {
+            student[students].finalGrade = "D";
+        }
+        else
+        {
+            student[students].finalGrade = "F";
+        }
+        
+}
+
+
+
+void finalOutput() { 
+
+    //cant get the spacing to work atm
+
+    cout << "\t \t \t GRADE BOOK \t \t \t" << endl;
+    cout << "===========================================================================================" << endl;
+    cout << "First Name\tLast Name\tPrograms\tQuizzes\t\tFinal Exam" << endl;
+
+    for (int students = 0; students < 1; students++) { 
+        cout << student[students].firstName << "\t" << student[students].lastName << "\t";
+
+        for (int j = 0; j < 5; j++) { 
+            cout << student[students].program[j] << "\t";
+        } 
+
+         for (int k = 0; k < 3; k++) { 
+            cout << student[students].exam[k] << "\t";
+        }
+
+        cout << student[students].finalExam << "\t";
+        
+    }
+
+    cout << "\n\n";
+
+    cout << "Final Grades: " << endl;
+    for (int students = 0; students < 5; students++) {
+        cout << student[students].firstName << "\t";
+        cout << student[students].lastName << "\t";
+        cout << student[students].finalGrade << "\t";
+    }
+}

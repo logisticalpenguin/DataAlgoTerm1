@@ -1,0 +1,192 @@
+#include <iostream>
+#include <limits>
+#include <conio.h> // for getch();
+#include <string>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+using namespace std;
+
+void mainProgram();
+void tryAgainFunc();
+void userInputChecker(int dataType, int i);
+int dataType = 0; // 1 for accountNumber, 2 for accountName, 3 for depositAmount, 4 for depositMonths
+int depositorsNumber = 3;
+	
+struct accountRecord {
+	string accountNumber;
+	string accountName;
+	float depositAmount;
+	int depositMonths;
+	float depositInterest;
+}; 
+
+int main(int argc, char** argv) {
+	mainProgram();
+	return 0;
+}
+
+void mainProgram() {
+
+	accountRecord Depositors[depositorsNumber];
+	
+	for (int i = 0; i < depositorsNumber; i++) // per Depositor
+	{
+		cout << "--- Depositor # " << i + 1 << endl;
+		cout << "Account Number : " ;
+		cin >> Depositors[i].accountNumber;
+		userInputChecker(1, i);
+		
+		cout << "\nAccount Name : ";
+		cin >> Depositors[i].accountName;
+		userInputChecker(2, i);
+		
+		cout << "\nAmount of Deposit : ";
+		cin >> Depositors[i].depositAmount;
+		userInputChecker(3, i);
+		
+		cout << "\nNo. of Months to Deposit : ";
+		cin >> Depositors[i].depositMonths;
+		userInputChecker(4, i);
+		
+		
+		// interest calculation
+		if (Depositors[i].depositMonths <= 3 && Depositors[i].depositMonths >= 1)
+		{
+			Depositors[i].depositInterest = Depositors[i].depositAmount * 0.02;
+		}
+		else if (Depositors[i].depositMonths <= 6 && Depositors[i].depositMonths >= 4)
+		{
+			Depositors[i].depositInterest = Depositors[i].depositAmount * 0.05;
+		}
+		else if (Depositors[i].depositMonths <= 9 && Depositors[i].depositMonths >= 7)
+		{
+			Depositors[i].depositInterest = Depositors[i].depositAmount * 0.08;
+		}
+		else if (Depositors[i].depositMonths >= 10)
+		{
+			Depositors[i].depositInterest = Depositors[i].depositAmount * 0.11;
+		}
+		else // error handler in case user inputs anything other than int
+		{
+			cout << "Please input integers only!" << endl;
+			cout << "Press any key to continue...\n\n" << endl;
+			getch();
+			return mainProgram();
+		}
+	}
+	
+	//printing of tables
+	cout << "\n\n\nAccount No.\t" << "Account Name\t" << "Amount of Deposit\t" << "Amount of Interest" << endl;
+	
+	for (int i = 0; i < depositorsNumber; i++) 
+	{
+		cout << Depositors[i].accountNumber << "\t\t" << Depositors[i].accountName << "\t\t" << Depositors[i].depositAmount << "\t\t\t" << Depositors[i].depositInterest << endl;
+	}
+	tryAgainFunc();
+}
+
+void tryAgainFunc() // separate try again function in order to not loop the main program
+{
+	char tryAgain;
+	
+	cout << "\nTry again? [y/n]: " ;
+	cin >> tryAgain ;
+	
+	switch(tryAgain)
+	{
+		case 'y' :
+		case 'Y' :
+			{
+				cout << "\n" ;
+				mainProgram();
+			}
+			break;
+		case 'n' :
+		case 'N' :
+			{
+				return;
+			}
+			break;
+		default :
+			{
+				cout << "Please do not input other characters!\n";
+				tryAgainFunc();
+			}
+			break;
+	}
+}
+
+void userInputChecker(int dataType, int i) {
+	
+	accountRecord Depositors[depositorsNumber];
+	
+	switch (dataType)
+	{
+		case 1 :
+			{
+				if (Depositors[i].accountNumber.size() > 7) // unfortunately, i do not have the time to debug this feature.
+				{
+					cout << "\nCharacter limit reached, please try again!";
+					cout << "Press any key to continue...";
+					getch();
+					mainProgram();
+				}
+			}
+			break;
+		case 2 :
+			{
+				if (Depositors[i].accountName.size() > 25) // unfortunately, i do not have the time to debug this feature.
+				{
+					cout << "\nCharacter limit reached, please try again!";
+					cout << "Press any key to continue...";
+					getch();
+					mainProgram();
+				}
+			}
+			break;
+		case 3 :
+			{
+				while(1) // user input validation
+				{
+					if(cin.fail())
+					{
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(),'\n');
+						cout << "Please input float / integers only!" << endl;
+						cout << "Press any key to continue...\n\n" << endl;
+						getch(); // press any key to continue to the next line of code
+						mainProgram(); // in case of the user input being invalid, resets their progress back to square one
+					}
+					if(!cin.fail())
+				break;
+				}
+			}
+			break;
+		case 4 :
+			{
+				while(1) // user input validation
+				{
+					if(cin.fail())
+					{
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(),'\n');
+						cout << "Please input integers only!" << endl;
+						cout << "Press any key to continue...\n\n" << endl;
+						getch(); // press any key to continue to the next line of code
+						mainProgram(); // in case of the user input being invalid, resets their progress back to square one
+					}
+					if(!cin.fail())
+				break;
+				}
+			}
+			break;
+		default :
+			{
+				cout << "Error 101, please try again!";
+				mainProgram();
+			}
+			break;
+	}
+}
+
