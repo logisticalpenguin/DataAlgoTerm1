@@ -1,0 +1,310 @@
+#include <iostream>
+#include <limits>
+
+using namespace std;
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+void SearchProgram();
+void SortProgram();
+void TryAgain();
+void MainMenu();
+void quickSort(int arr[], int low, int high);
+void displayArray(int arr[], int size, int order);
+void CharCountProgram();
+
+int main(int argc, char** argv) {
+	MainMenu();
+	return 0;
+}
+
+void MainMenu()
+{
+	string userInput;
+	
+	cout << "Data Structures and Algorithm Final Output" << endl;
+	cout << "[1] Sort\n[2] Search\n[3] Character Counting\n[4] Exit\n";
+	cout << "Please enter the number of the program you wish to use : ", cin >> userInput;
+
+	if (userInput == "1")
+	{
+		system("pause");
+		system("cls");
+		SortProgram();
+	}
+	else if (userInput == "2")
+	{
+		system("pause");
+		system("cls");
+		SearchProgram();	
+	}
+	else if (userInput == "3")
+	{
+		system("pause");
+		system("cls");
+		CharCountProgram();
+	}
+	else if (userInput == "4")
+	{
+		system("pause");
+	}
+	else
+	{
+		cout << "Error detected, Please input the correct numbers only.\n";
+		system("pause");
+		system("cls");
+		MainMenu();
+	}
+}
+
+int arrLocation;
+
+int searchLinearAlgo(int arr[], int sizeArr, int userInputSearch)
+{
+	for (int i = 0; i < sizeArr; i++)
+	{
+		if (arr[i] == userInputSearch)
+		{
+			arrLocation = i + 1;
+			return 1;
+		}
+	}
+	return -1;
+}
+
+void SearchProgram()
+{
+	int userInputArrSize = 10;
+	int userInput[userInputArrSize];
+	int userInputSearch;
+	
+	int arrSize = (sizeof(userInput)/sizeof(userInput[0]));
+	
+	cout << "Please input 10 integers.\n";
+	
+	for (int i = 0; i < arrSize; i++) // get user input
+	{
+		cout << "Input Array # " << i + 1 << ": ", cin >> userInput[i];
+	}
+	
+	cout << "What number would you like to search? ", cin >> userInputSearch;
+	
+	int result = searchLinearAlgo(userInput, arrSize, userInputSearch);
+	
+	switch (result)
+	{
+		case 1 :
+		{
+			cout << "The number " << userInputSearch << " is in the " << arrLocation;
+			
+			switch (arrLocation)
+			{
+				case 1 :
+					{
+						cout << "st position\n";
+					}
+					break;
+				case 2 :
+					{
+						cout << "nd position\n";
+					}
+					break;
+				case 3 :
+					{
+						cout << "rd position\n";
+					}
+					break;
+				default :
+					{
+						cout << "th position";
+					}
+					break;
+			}
+			TryAgain();
+		}
+		break;
+		case -1 :
+		{
+			cout << "The number " << userInputSearch << " is NOT in the array\n";
+			TryAgain();
+		}
+		break;
+		default :
+		{
+			cout << "Error detected, shutting down...";
+			system("pause");
+		}
+		break;
+	}
+}
+
+void SortProgram()
+{
+	int arr[10];
+  	int n = sizeof(arr)/sizeof(arr[0]); 
+ 	int userInputOrder; 
+
+	for (int i = 0; i < n; i++) {
+        cout << "Input array number " << i + 1 << " here: ", cin >> arr[i];
+        
+        while(1) { // User input Validation - Checks whether input is int data type or not.
+        if(cin.fail()) { 
+            cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
+			cout<<"Error detected! Please only input integers!";
+			system("pause");
+			system("cls");
+			return MainMenu();
+        }
+        if(!cin.fail())
+        break;
+    	}
+    }
+    
+    cout << "\n[1] Ascending\n[2] Descending\nUser Input: ";
+
+    cin >> userInputOrder;
+    
+    if (userInputOrder == 1)
+    {
+    	int order = 1;
+        quickSort(arr, 0, n-1); 
+        cout<<"Quick Sort: " << endl; 
+        displayArray(arr,n, order);
+		TryAgain(); 
+	}
+	else if (userInputOrder == 2)
+	{
+		int order = 2;
+        quickSort(arr, 0, n-1); 
+        cout<<"Quick Sort: " << endl; 
+        displayArray(arr,n, order); 
+        TryAgain(); 
+	}    
+	else
+	{
+		cout << "Error detected! Please enter the correct input! (1 | 2).\nExiting Application.\n";
+        system ("pause");
+	}
+}
+
+void CharCountProgram()
+{
+	int i,j,k;
+	
+	string userInput;
+	
+	cout << "Enter any word.\n";
+	cin >> userInput;
+	
+	string s = userInput;
+	int size = s.size();
+	
+	if (size > 100)
+	{
+		cout << "Error detected! You have reached the character limit (100).\nPlease try again.\n";
+		system("pause");
+		system("cls");
+		CharCountProgram();
+	}
+	else
+	{
+		for (i=0; i < size; ++i)
+		{
+			int count = 1;
+	
+			for (j=i+1; j<size;)
+			{
+				if (s[i]==s[j]) // removing duplicate array element, as well as increase the int count of the said duplicate element.
+				{
+					count++;
+					for (k=j; k < size-1; ++k)
+						s[k]=s[k+1];
+						--size;
+				}
+				else
+				++j;
+			}
+			cout << s[i] << " - " << count << endl;
+		}
+	    TryAgain();
+	}
+}
+
+void TryAgain()
+{
+	string ch;
+    cout << "\nGo back to the Main Menu? [Y/N]: "; 
+    cin >> ch;
+    if (ch == "Y" || ch == "y") { 
+    	system("cls");
+     	MainMenu();
+    }
+    else if (ch == "N" || ch == "n"){
+     	system("pause");
+    }
+    else {
+    	cout << "Error detected, Please do not input other characters\n";
+    	TryAgain();
+	}
+}
+
+void swap(int* a, int* b) 
+{ 
+    int t = *a; 
+    *a = *b; 
+    *b = t; 
+} 
+   
+int partition (int arr[], int low, int high) 
+{ 
+    int pivot = arr[high];    
+    int i = (low - 1);   
+   
+    for (int j = low; j <= high- 1; j++) 
+    { 
+        if (arr[j] <= pivot) 
+        { 
+            i++;    
+            swap(&arr[i], &arr[j]); 
+        } 
+    } 
+    swap(&arr[i + 1], &arr[high]); 
+    return (i + 1); 
+} 
+
+void quickSort(int arr[], int low, int high) 
+{ 
+    if (low < high) 
+    { 
+        int pivot = partition(arr, low, high); 
+   
+        quickSort(arr, low, pivot - 1); 
+        quickSort(arr, pivot + 1, high); 
+    } 
+} 
+
+void displayArray(int arr[], int size, int order) 
+{ 
+    switch (order)
+    {
+      case 1 :
+      {
+          for (int i = 0; i < size; i++) 
+          cout<< arr[i] << "\t"; 
+      }
+      break;
+      case 2 :
+      {
+          for (int i = (size - 1); i >= 0; i--) 
+          cout<< arr[i] << "\t"; 
+      }
+      break;
+      default :
+      {
+          cout << "Error! Exiting application.." << endl;
+          system("pause");
+      }
+      break;
+    }
+} 
